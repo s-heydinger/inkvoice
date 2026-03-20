@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://swiftbill-pi.vercel.app/sitemap.xml
+Sitemap: https://inkvoice.io/sitemap.xml

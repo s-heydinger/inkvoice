@@ -48,7 +48,7 @@ export default function LandingPage({ onGetStarted }) {
             <div className="w-8 h-8 bg-primary-600 rounded-lg flex items-center justify-center">
               <FileText className="w-4 h-4 text-white" />
             </div>
-            <span className="text-xl font-semibold text-gray-900">SwiftBill</span>
+            <span className="text-xl font-semibold text-gray-900">Inkvoice</span>
           </div>
           <button
             onClick={onGetStarted}
@@ -72,7 +72,7 @@ export default function LandingPage({ onGetStarted }) {
         </h1>
         <p className="text-lg sm:text-xl text-gray-500 max-w-2xl mx-auto mb-10">
           Stop wasting time with complicated invoicing software.
-          SwiftBill lets you create beautiful, professional invoices and download them as PDFs — instantly.
+          Inkvoice lets you create beautiful, professional invoices and download them as PDFs — instantly.
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center">
           <button
@@ -214,7 +214,7 @@ export default function LandingPage({ onGetStarted }) {
           Ready to get paid faster?
         </h2>
         <p className="text-gray-500 mb-8 max-w-lg mx-auto">
-          Join thousands of freelancers who create professional invoices with SwiftBill.
+          Join thousands of freelancers who create professional invoices with Inkvoice.
         </p>
         <button
           onClick={onGetStarted}
@@ -231,10 +231,10 @@ export default function LandingPage({ onGetStarted }) {
             <div className="w-6 h-6 bg-primary-600 rounded flex items-center justify-center">
               <FileText className="w-3 h-3 text-white" />
             </div>
-            <span className="font-semibold text-gray-900">SwiftBill</span>
+            <span className="font-semibold text-gray-900">Inkvoice</span>
           </div>
           <p className="text-sm text-gray-400">
-            &copy; {new Date().getFullYear()} SwiftBill. Free forever for basic invoicing.
+            &copy; {new Date().getFullYear()} Inkvoice. Free forever for basic invoicing.
           </p>
         </div>
       </footer>

@@ -8,7 +8,7 @@ import { useState } from 'react';
 // 1. Go to https://dashboard.stripe.com/payment-links
 // 2. Click "+ New"
 // 3. Set it to "Recurring" → $8/month
-// 4. Name it "SwiftBill Pro"
+// 4. Name it "Inkvoice Pro"
 // 5. Copy the link and paste it below
 // ============================================================
 const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/YOUR_LINK_HERE';

@@ -1,6 +1,6 @@
-const STORAGE_KEY = 'swiftbill_invoices';
-const SETTINGS_KEY = 'swiftbill_settings';
-const COUNTER_KEY = 'swiftbill_counter';
+const STORAGE_KEY = 'inkvoice_invoices';
+const SETTINGS_KEY = 'inkvoice_settings';
+const COUNTER_KEY = 'inkvoice_counter';
 
 export function saveInvoice(invoice) {
   const invoices = getInvoices();
