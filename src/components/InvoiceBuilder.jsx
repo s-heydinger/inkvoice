@@ -4,6 +4,7 @@ import InvoiceForm from './InvoiceForm';
 import InvoicePreview from './InvoicePreview';
 import SavedInvoices from './SavedInvoices';
 import ProBanner from './ProBanner';
+import UpgradeModal from './UpgradeModal';
 import { createBlankInvoice, saveInvoice } from '../utils/storage';
 import { generatePDF } from '../utils/pdf';
 
@@ -14,6 +15,7 @@ export default function InvoiceBuilder({ onBack }) {
   const [showSaved, setShowSaved] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
   const [saveMessage, setSaveMessage] = useState('');
+  const [showUpgrade, setShowUpgrade] = useState(false);
 
   const handleSave = useCallback(() => {
     setSaving(true);
@@ -43,6 +45,7 @@ export default function InvoiceBuilder({ onBack }) {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      {showUpgrade && <UpgradeModal onClose={() => setShowUpgrade(false)} />}
       <ProBanner />
       {/* Top bar */}
       <div className="bg-white border-b border-gray-200 sticky top-0 z-50">
@@ -111,7 +114,7 @@ export default function InvoiceBuilder({ onBack }) {
             )}
 
             <div className="bg-white rounded-xl border border-gray-200 p-5">
-              <InvoiceForm invoice={invoice} onChange={setInvoice} />
+              <InvoiceForm invoice={invoice} onChange={setInvoice} onProClick={() => setShowUpgrade(true)} />
             </div>
           </div>
 

@@ -1,4 +1,5 @@
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash2, Lock } from 'lucide-react';
+import { TEMPLATES } from './InvoicePreview';
 
 const currencies = ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY', 'INR', 'BRL', 'MXN'];
 
@@ -29,7 +30,7 @@ function PartyFields({ label, party, onChange }) {
   );
 }
 
-export default function InvoiceForm({ invoice, onChange }) {
+export default function InvoiceForm({ invoice, onChange, onProClick }) {
   const update = (field, value) => onChange({ ...invoice, [field]: value });
 
   const updateItem = (id, field, value) => {
@@ -189,18 +190,21 @@ export default function InvoiceForm({ invoice, onChange }) {
       {/* Template selector */}
       <div>
         <label className="block text-xs font-medium text-gray-500 mb-2">Template</label>
-        <div className="flex gap-2">
-          {['modern', 'classic', 'minimal'].map(t => (
+        <div className="flex flex-wrap gap-2">
+          {Object.entries(TEMPLATES).map(([key, tmpl]) => (
             <button
-              key={t}
-              onClick={() => update('template', t)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium capitalize transition-colors cursor-pointer ${
-                invoice.template === t
+              key={key}
+              onClick={() => tmpl.pro ? onProClick?.() : update('template', key)}
+              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
+                invoice.template === key
                   ? 'bg-primary-600 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                  : tmpl.pro
+                    ? 'bg-gradient-to-r from-amber-50 to-orange-50 text-amber-700 border border-amber-200 hover:border-amber-300'
+                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
               }`}
             >
-              {t}
+              {tmpl.name}
+              {tmpl.pro && <Lock className="w-3 h-3" />}
             </button>
           ))}
         </div>
