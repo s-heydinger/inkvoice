@@ -1,11 +1,20 @@
-import { formatCurrency, calculateTotals } from '../utils/storage';
+import { formatCurrency, calculateTotals, formatAddress } from '../utils/storage';
 
 function Watermark() {
   return (
-    <div className="mt-8 pt-4 border-t border-gray-100 text-center">
-      <p className="text-xs text-gray-300">Created with Inkvoice — inkvoice.us</p>
+    <div className="mt-8 pt-5 border-t border-primary-100 text-center bg-primary-50/50 -mx-8 -mb-8 px-8 pb-5 rounded-b-lg">
+      <p className="text-sm text-primary-400 font-medium tracking-wide">
+        Created with <span className="font-semibold text-primary-500">Inkvoice</span>
+      </p>
+      <p className="text-xs text-primary-300 mt-0.5">Free invoicing at inkvoice.us</p>
     </div>
   );
+}
+
+function AddressBlock({ party }) {
+  const addr = formatAddress(party);
+  if (!addr) return null;
+  return <p className="text-sm text-gray-500 whitespace-pre-line">{addr}</p>;
 }
 
 function ItemsTable({ invoice, currency, headerBg = 'bg-transparent', headerText = 'text-gray-500' }) {
@@ -95,14 +104,14 @@ function ModernTemplate({ invoice, totals }) {
           <p className="text-xs font-semibold text-primary-600 uppercase tracking-wider mb-2">From</p>
           <p className="font-semibold text-gray-900">{invoice.from.name || 'Your Company'}</p>
           {invoice.from.email && <p className="text-sm text-gray-500">{invoice.from.email}</p>}
-          {invoice.from.address && <p className="text-sm text-gray-500 whitespace-pre-line">{invoice.from.address}</p>}
+          <AddressBlock party={invoice.from} />
           {invoice.from.phone && <p className="text-sm text-gray-500">{invoice.from.phone}</p>}
         </div>
         <div>
           <p className="text-xs font-semibold text-primary-600 uppercase tracking-wider mb-2">Bill To</p>
           <p className="font-semibold text-gray-900">{invoice.to.name || 'Client Name'}</p>
           {invoice.to.email && <p className="text-sm text-gray-500">{invoice.to.email}</p>}
-          {invoice.to.address && <p className="text-sm text-gray-500 whitespace-pre-line">{invoice.to.address}</p>}
+          <AddressBlock party={invoice.to} />
           {invoice.to.phone && <p className="text-sm text-gray-500">{invoice.to.phone}</p>}
         </div>
       </div>
@@ -136,7 +145,7 @@ function ClassicTemplate({ invoice, totals }) {
           <p className="text-xs font-semibold text-gray-400 uppercase mb-2">Bill To</p>
           <p className="font-semibold text-gray-900">{invoice.to.name || 'Client Name'}</p>
           {invoice.to.email && <p className="text-sm text-gray-500">{invoice.to.email}</p>}
-          {invoice.to.address && <p className="text-sm text-gray-500 whitespace-pre-line">{invoice.to.address}</p>}
+          <AddressBlock party={invoice.to} />
           {invoice.to.phone && <p className="text-sm text-gray-500">{invoice.to.phone}</p>}
         </div>
         <div className="text-right">
@@ -172,12 +181,12 @@ function MinimalTemplate({ invoice, totals }) {
         <div>
           <p className="font-medium text-gray-900 text-sm">{invoice.from.name || 'Your Company'}</p>
           {invoice.from.email && <p className="text-xs text-gray-400 mt-0.5">{invoice.from.email}</p>}
-          {invoice.from.address && <p className="text-xs text-gray-400 whitespace-pre-line">{invoice.from.address}</p>}
+          <AddressBlock party={invoice.from} />
         </div>
         <div className="text-right">
           <p className="font-medium text-gray-900 text-sm">{invoice.to.name || 'Client'}</p>
           {invoice.to.email && <p className="text-xs text-gray-400 mt-0.5">{invoice.to.email}</p>}
-          {invoice.to.address && <p className="text-xs text-gray-400 whitespace-pre-line">{invoice.to.address}</p>}
+          <AddressBlock party={invoice.to} />
         </div>
       </div>
       <div className="mb-10">
@@ -224,9 +233,7 @@ function MinimalTemplate({ invoice, totals }) {
           <p className="text-xs text-gray-300 whitespace-pre-line">{invoice.notes}</p>
         </div>
       )}
-      <div className="mt-10 text-center">
-        <p className="text-xs text-gray-200">inkvoice.us</p>
-      </div>
+      <Watermark />
       <div className="mt-4 text-right">
         <p className="text-xs text-gray-300">Due: {invoice.dueDate}</p>
       </div>
@@ -247,7 +254,7 @@ function ExecutiveTemplate({ invoice, totals }) {
           <p className="text-gray-400 text-xs uppercase tracking-wider mb-1">From</p>
           <p className="font-semibold text-sm">{invoice.from.name || 'Your Company'}</p>
           {invoice.from.email && <p className="text-gray-400 text-xs mt-1">{invoice.from.email}</p>}
-          {invoice.from.address && <p className="text-gray-400 text-xs whitespace-pre-line">{invoice.from.address}</p>}
+          <AddressBlock party={invoice.from} />
           {invoice.from.phone && <p className="text-gray-400 text-xs">{invoice.from.phone}</p>}
         </div>
         <div className="w-2/3 p-8">
@@ -256,7 +263,7 @@ function ExecutiveTemplate({ invoice, totals }) {
               <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Bill To</p>
               <p className="font-semibold text-gray-900">{invoice.to.name || 'Client Name'}</p>
               {invoice.to.email && <p className="text-sm text-gray-500">{invoice.to.email}</p>}
-              {invoice.to.address && <p className="text-sm text-gray-500 whitespace-pre-line">{invoice.to.address}</p>}
+              <AddressBlock party={invoice.to} />
             </div>
             <div className="text-right">
               <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">{invoice.invoiceNumber}</p>
@@ -336,7 +343,7 @@ function BoldTemplate({ invoice, totals }) {
             <p className="font-bold text-lg">{invoice.from.name || 'Your Company'}</p>
             {invoice.from.email && <p className="text-blue-200 text-sm">{invoice.from.email}</p>}
             {invoice.from.phone && <p className="text-blue-200 text-sm">{invoice.from.phone}</p>}
-            {invoice.from.address && <p className="text-blue-200 text-sm whitespace-pre-line">{invoice.from.address}</p>}
+            <AddressBlock party={invoice.from} />
           </div>
         </div>
       </div>
@@ -347,7 +354,7 @@ function BoldTemplate({ invoice, totals }) {
             <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Bill To</p>
             <p className="font-semibold text-gray-900">{invoice.to.name || 'Client Name'}</p>
             {invoice.to.email && <p className="text-sm text-gray-500">{invoice.to.email}</p>}
-            {invoice.to.address && <p className="text-sm text-gray-500 whitespace-pre-line">{invoice.to.address}</p>}
+            <AddressBlock party={invoice.to} />
           </div>
           <div className="bg-white border border-gray-200 rounded-xl p-4 shadow-sm text-right">
             <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Date</p>
@@ -397,7 +404,7 @@ function StudioTemplate({ invoice, totals }) {
         <div>
           <p className="font-bold text-gray-900 text-lg">{invoice.from.name || 'Your Company'}</p>
           {invoice.from.email && <p className="text-sm text-gray-500">{invoice.from.email}</p>}
-          {invoice.from.address && <p className="text-sm text-gray-500 whitespace-pre-line">{invoice.from.address}</p>}
+          <AddressBlock party={invoice.from} />
           {invoice.from.phone && <p className="text-sm text-gray-500">{invoice.from.phone}</p>}
         </div>
         <div className="text-right">
@@ -424,7 +431,7 @@ function StudioTemplate({ invoice, totals }) {
         <p className="text-xs text-gray-400 uppercase tracking-wider mb-1">Bill To</p>
         <p className="font-semibold text-gray-900">{invoice.to.name || 'Client Name'}</p>
         {invoice.to.email && <p className="text-sm text-gray-500">{invoice.to.email}</p>}
-        {invoice.to.address && <p className="text-sm text-gray-500 whitespace-pre-line">{invoice.to.address}</p>}
+        <AddressBlock party={invoice.to} />
       </div>
       {/* Items */}
       <table className="w-full mb-8">

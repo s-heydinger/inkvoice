@@ -185,11 +185,11 @@ export default function LandingPage({ onGetStarted }) {
             </div>
             <h3 className="font-semibold text-gray-900 text-lg">Pro</h3>
             <div className="mt-4 mb-6">
-              <span className="text-4xl font-bold text-gray-900">$8</span>
+              <span className="text-4xl font-bold text-gray-900">$7.99</span>
               <span className="text-gray-400 ml-1">/month</span>
             </div>
             <ul className="space-y-3 mb-8">
-              {['Everything in Free', 'No watermark on invoices', 'Premium templates', 'Custom logo on invoices', 'Priority support', 'Early access to new features'].map(f => (
+              {['Everything in Free', 'No watermark on invoices', 'Premium templates', 'Save your info & client details', 'Custom logo on invoices', 'Early access to new features'].map(f => (
                 <li key={f} className="flex items-center gap-2 text-sm text-gray-600">
                   <Check className="w-4 h-4 text-primary-600 shrink-0" />
                   {f}

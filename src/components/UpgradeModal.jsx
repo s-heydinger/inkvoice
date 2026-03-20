@@ -5,19 +5,17 @@ const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/test_aFa7sLgFi9bR3IW0pz2B200
 const proFeatures = [
   'No watermark on invoices',
   '6 premium templates (Executive, Bold, Studio)',
+  'Save your info & client details',
   'Custom logo on invoices',
-  'Priority support',
   'Early access to new features',
 ];
 
 export default function UpgradeModal({ onClose }) {
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-      {/* Backdrop */}
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
 
-      {/* Modal */}
-      <div className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full p-8 animate-in">
+      <div className="relative bg-white rounded-2xl shadow-2xl max-w-md w-full p-8">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 p-1 text-gray-400 hover:text-gray-600 transition-colors cursor-pointer"
@@ -35,7 +33,7 @@ export default function UpgradeModal({ onClose }) {
 
         <div className="bg-gray-50 rounded-xl p-5 mb-6">
           <div className="flex items-baseline gap-1 mb-4">
-            <span className="text-4xl font-bold text-gray-900">$8</span>
+            <span className="text-4xl font-bold text-gray-900">$7.99</span>
             <span className="text-gray-400">/month</span>
           </div>
           <ul className="space-y-3">
