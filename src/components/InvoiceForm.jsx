@@ -1,7 +1,7 @@
 import { Plus, Trash2, Lock, Save, ChevronDown, User, Users } from 'lucide-react';
 import { useState } from 'react';
 import { TEMPLATES } from './InvoicePreview';
-import { getSavedProfiles, saveProfile, deleteProfile, getSavedClients, saveClient, deleteClient } from '../utils/storage';
+import { getSavedProfiles, saveProfile, deleteProfile, getSavedClients, saveClient, deleteClient, formatCurrency } from '../utils/storage';
 
 const currencies = ['USD', 'EUR', 'GBP', 'CAD', 'AUD', 'JPY', 'INR', 'BRL', 'MXN'];
 
@@ -127,7 +127,7 @@ function PartyFields({ label, party, onChange, savedItems, onSaveItem, onDeleteI
   );
 }
 
-export default function InvoiceForm({ invoice, onChange, onProClick }) {
+export default function InvoiceForm({ invoice, onChange, onProClick, isPro = false }) {
   const update = (field, value) => onChange({ ...invoice, [field]: value });
   const [, forceUpdate] = useState(0);
   const refresh = () => forceUpdate(n => n + 1);
@@ -151,8 +151,7 @@ export default function InvoiceForm({ invoice, onChange, onProClick }) {
     update('items', invoice.items.filter(item => item.id !== id));
   };
 
-  // Pro-gated: for now everyone gets save/load. Set to true to gate behind Pro.
-  const saveLoadIsPro = false;
+  const saveLoadIsPro = !isPro;
 
   return (
     <div className="space-y-6">
@@ -226,42 +225,42 @@ export default function InvoiceForm({ invoice, onChange, onProClick }) {
         <div className="space-y-2">
           {/* Header */}
           <div className="grid grid-cols-12 gap-2 text-xs font-medium text-gray-500 px-1">
-            <div className="col-span-5">Description</div>
-            <div className="col-span-2">Qty</div>
+            <div className="col-span-4">Description</div>
+            <div className="col-span-1">Qty</div>
             <div className="col-span-3">Rate</div>
-            <div className="col-span-2 text-right">Amount</div>
+            <div className="col-span-4 text-right">Amount</div>
           </div>
 
           {invoice.items.map(item => (
             <div key={item.id} className="grid grid-cols-12 gap-2 items-center">
               <input
-                className="col-span-5 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="col-span-4 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent min-w-0"
                 placeholder="Description"
                 value={item.description}
                 onChange={e => updateItem(item.id, 'description', e.target.value)}
               />
               <input
-                className="col-span-2 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="col-span-1 border border-gray-200 rounded-lg px-2 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent min-w-0 text-center"
                 type="number"
                 min="0"
                 value={item.quantity}
                 onChange={e => updateItem(item.id, 'quantity', parseFloat(e.target.value) || 0)}
               />
               <input
-                className="col-span-3 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                className="col-span-3 border border-gray-200 rounded-lg px-2 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent min-w-0"
                 type="number"
                 min="0"
                 step="0.01"
                 value={item.rate}
                 onChange={e => updateItem(item.id, 'rate', parseFloat(e.target.value) || 0)}
               />
-              <div className="col-span-2 flex items-center justify-end gap-1">
-                <span className="text-sm font-medium text-gray-700">
-                  {((item.quantity || 0) * (item.rate || 0)).toFixed(2)}
+              <div className="col-span-4 flex items-center justify-end gap-1 min-w-0">
+                <span className="text-sm font-medium text-gray-700 truncate">
+                  {formatCurrency((item.quantity || 0) * (item.rate || 0), invoice.currency)}
                 </span>
                 <button
                   onClick={() => removeItem(item.id)}
-                  className="p-1 text-gray-300 hover:text-red-500 transition-colors cursor-pointer"
+                  className="p-1 text-gray-300 hover:text-red-500 transition-colors cursor-pointer shrink-0"
                   title="Remove item"
                 >
                   <Trash2 className="w-3.5 h-3.5" />
@@ -317,22 +316,27 @@ export default function InvoiceForm({ invoice, onChange, onProClick }) {
       <div>
         <label className="block text-xs font-medium text-gray-500 mb-2">Template</label>
         <div className="flex flex-wrap gap-2">
-          {Object.entries(TEMPLATES).map(([key, tmpl]) => (
-            <button
-              key={key}
-              onClick={() => tmpl.pro ? onProClick?.() : update('template', key)}
-              className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
-                invoice.template === key
-                  ? 'bg-primary-600 text-white'
-                  : tmpl.pro
-                    ? 'bg-gradient-to-r from-amber-50 to-orange-50 text-amber-700 border border-amber-200 hover:border-amber-300'
-                    : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              {tmpl.name}
-              {tmpl.pro && <Lock className="w-3 h-3" />}
-            </button>
-          ))}
+          {Object.entries(TEMPLATES).map(([key, tmpl]) => {
+            const isProTemplate = tmpl.pro && !isPro;
+            return (
+              <button
+                key={key}
+                onClick={() => update('template', key)}
+                className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors cursor-pointer flex items-center gap-1.5 ${
+                  invoice.template === key
+                    ? isProTemplate
+                      ? 'bg-gradient-to-r from-amber-500 to-orange-500 text-white'
+                      : 'bg-primary-600 text-white'
+                    : isProTemplate
+                      ? 'bg-gradient-to-r from-amber-50 to-orange-50 text-amber-700 border border-amber-200 hover:border-amber-300'
+                      : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
+                }`}
+              >
+                {tmpl.name}
+                {isProTemplate && <Lock className="w-3 h-3" />}
+              </button>
+            );
+          })}
         </div>
       </div>
     </div>

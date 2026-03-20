@@ -85,7 +85,7 @@ function Notes({ notes }) {
 
 // ─── FREE TEMPLATES ─────────────────────────────────────────
 
-function ModernTemplate({ invoice, totals }) {
+function ModernTemplate({ invoice, totals, hideWatermark }) {
   const { currency } = invoice;
   return (
     <div className="p-8 bg-white" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
@@ -118,12 +118,12 @@ function ModernTemplate({ invoice, totals }) {
       <ItemsTable invoice={invoice} currency={currency} />
       <TotalsBlock invoice={invoice} totals={totals} currency={currency} />
       <Notes notes={invoice.notes} />
-      <Watermark />
+      {!hideWatermark && <Watermark />}
     </div>
   );
 }
 
-function ClassicTemplate({ invoice, totals }) {
+function ClassicTemplate({ invoice, totals, hideWatermark }) {
   const { currency } = invoice;
   return (
     <div className="p-8 bg-white" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
@@ -164,12 +164,12 @@ function ClassicTemplate({ invoice, totals }) {
       <ItemsTable invoice={invoice} currency={currency} headerBg="bg-gray-50" headerText="text-gray-600" />
       <TotalsBlock invoice={invoice} totals={totals} currency={currency} accentColor="text-primary-700" borderColor="border-primary-700" />
       <Notes notes={invoice.notes} />
-      <Watermark />
+      {!hideWatermark && <Watermark />}
     </div>
   );
 }
 
-function MinimalTemplate({ invoice, totals }) {
+function MinimalTemplate({ invoice, totals, hideWatermark }) {
   const { currency } = invoice;
   return (
     <div className="p-8 bg-white" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
@@ -233,7 +233,7 @@ function MinimalTemplate({ invoice, totals }) {
           <p className="text-xs text-gray-300 whitespace-pre-line">{invoice.notes}</p>
         </div>
       )}
-      <Watermark />
+      {!hideWatermark && <Watermark />}
       <div className="mt-4 text-right">
         <p className="text-xs text-gray-300">Due: {invoice.dueDate}</p>
       </div>
@@ -243,7 +243,7 @@ function MinimalTemplate({ invoice, totals }) {
 
 // ─── PREMIUM TEMPLATES ──────────────────────────────────────
 
-function ExecutiveTemplate({ invoice, totals }) {
+function ExecutiveTemplate({ invoice, totals, hideWatermark }) {
   const { currency } = invoice;
   return (
     <div className="bg-white" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
@@ -322,13 +322,13 @@ function ExecutiveTemplate({ invoice, totals }) {
           </div>
         </div>
         <Notes notes={invoice.notes} />
-        <Watermark />
+        {!hideWatermark && <Watermark />}
       </div>
     </div>
   );
 }
 
-function BoldTemplate({ invoice, totals }) {
+function BoldTemplate({ invoice, totals, hideWatermark }) {
   const { currency } = invoice;
   return (
     <div className="bg-white" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
@@ -388,13 +388,13 @@ function BoldTemplate({ invoice, totals }) {
         </table>
         <TotalsBlock invoice={invoice} totals={totals} currency={currency} accentColor="text-violet-600" borderColor="border-violet-600" />
         <Notes notes={invoice.notes} />
-        <Watermark />
+        {!hideWatermark && <Watermark />}
       </div>
     </div>
   );
 }
 
-function StudioTemplate({ invoice, totals }) {
+function StudioTemplate({ invoice, totals, hideWatermark }) {
   const { currency } = invoice;
   return (
     <div className="p-8 bg-white" style={{ fontFamily: "'Inter', system-ui, sans-serif" }}>
@@ -458,7 +458,7 @@ function StudioTemplate({ invoice, totals }) {
       </table>
       <TotalsBlock invoice={invoice} totals={totals} currency={currency} accentColor="text-orange-600" borderColor="border-orange-500" />
       <Notes notes={invoice.notes} />
-      <Watermark />
+      {!hideWatermark && <Watermark />}
     </div>
   );
 }
@@ -474,7 +474,7 @@ export const TEMPLATES = {
   studio:    { name: 'Studio',    component: StudioTemplate,    pro: true },
 };
 
-export default function InvoicePreview({ invoice }) {
+export default function InvoicePreview({ invoice, isPro = false }) {
   const totals = calculateTotals(invoice);
   const templateEntry = TEMPLATES[invoice.template] || TEMPLATES.modern;
   const Template = templateEntry.component;
@@ -485,7 +485,7 @@ export default function InvoicePreview({ invoice }) {
       className="bg-white shadow-lg rounded-lg overflow-hidden"
       style={{ width: '100%', minHeight: '700px' }}
     >
-      <Template invoice={invoice} totals={totals} />
+      <Template invoice={invoice} totals={totals} hideWatermark={isPro} />
     </div>
   );
 }

@@ -1,4 +1,7 @@
-import { FileText, Download, Zap, Shield, Palette, Clock, Check, Sparkles } from 'lucide-react';
+import { FileText, Download, Zap, Shield, Palette, Clock, Check, Sparkles, LogIn } from 'lucide-react';
+import { useState } from 'react';
+import LoginModal from './LoginModal';
+import { usePro } from '../utils/pro';
 
 // ============================================================
 // IMPORTANT: Replace this URL with your actual Stripe Payment Link!
@@ -39,8 +42,12 @@ const features = [
 ];
 
 export default function LandingPage({ onGetStarted }) {
+  const [showLogin, setShowLogin] = useState(false);
+  const { isPro } = usePro();
+
   return (
     <div className="min-h-screen">
+      {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
       {/* Nav */}
       <nav className="border-b border-gray-200 bg-white/80 backdrop-blur-sm sticky top-0 z-50">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 h-16 flex items-center justify-between">
@@ -50,12 +57,21 @@ export default function LandingPage({ onGetStarted }) {
             </div>
             <span className="text-xl font-semibold text-gray-900">Inkvoice</span>
           </div>
-          <button
-            onClick={onGetStarted}
-            className="bg-primary-600 text-white px-5 py-2 rounded-lg font-medium text-sm hover:bg-primary-700 transition-colors cursor-pointer"
-          >
-            Create Invoice — Free
-          </button>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={() => setShowLogin(true)}
+              className="flex items-center gap-1.5 text-sm text-gray-600 hover:text-gray-900 font-medium transition-colors cursor-pointer"
+            >
+              <LogIn className="w-4 h-4" />
+              {isPro ? 'My Account' : 'Log In'}
+            </button>
+            <button
+              onClick={onGetStarted}
+              className="bg-primary-600 text-white px-5 py-2 rounded-lg font-medium text-sm hover:bg-primary-700 transition-colors cursor-pointer"
+            >
+              Create Invoice — Free
+            </button>
+          </div>
         </div>
       </nav>
 
