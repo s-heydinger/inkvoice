@@ -96,7 +96,7 @@ function ModernTemplate({ invoice, totals }) {
 
       {/* Watermark for free tier */}
       <div className="mt-8 pt-4 border-t border-gray-100 text-center">
-        <p className="text-xs text-gray-300">Created with Inkvoice — inkvoice.io</p>
+        <p className="text-xs text-gray-300">Created with Inkvoice — inkvoice.us</p>
       </div>
     </div>
   );
@@ -202,7 +202,7 @@ function ClassicTemplate({ invoice, totals }) {
       )}
 
       <div className="mt-8 pt-4 border-t border-gray-100 text-center">
-        <p className="text-xs text-gray-300">Created with Inkvoice — inkvoice.io</p>
+        <p className="text-xs text-gray-300">Created with Inkvoice — inkvoice.us</p>
       </div>
     </div>
   );
@@ -278,7 +278,7 @@ function MinimalTemplate({ invoice, totals }) {
       )}
 
       <div className="mt-10 text-center">
-        <p className="text-xs text-gray-200">inkvoice.io</p>
+        <p className="text-xs text-gray-200">inkvoice.us</p>
       </div>
 
       <div className="mt-4 text-right">
