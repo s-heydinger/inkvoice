@@ -164,7 +164,7 @@ export default function LandingPage({ onGetStarted }) {
               <span className="text-gray-400 ml-1">/forever</span>
             </div>
             <ul className="space-y-3 mb-8">
-              {['Unlimited invoices', 'PDF download', '3 templates', 'Tax & discount calculations', 'Save invoices locally', 'Multi-currency'].map(f => (
+              {['Unlimited invoices', 'PDF download', '3 templates', 'Tax & discount calculations', 'Multi-currency'].map(f => (
                 <li key={f} className="flex items-center gap-2 text-sm text-gray-600">
                   <Check className="w-4 h-4 text-green-500 shrink-0" />
                   {f}
@@ -189,7 +189,7 @@ export default function LandingPage({ onGetStarted }) {
               <span className="text-gray-400 ml-1">/month</span>
             </div>
             <ul className="space-y-3 mb-8">
-              {['Everything in Free', 'No watermark on invoices', 'Premium templates', 'Save your info & client details', 'Custom logo on invoices', 'Early access to new features'].map(f => (
+              {['Everything in Free', 'No watermark on invoices', 'Premium templates', 'Save invoices & client details', 'Custom logo on invoices', 'Early access to new features'].map(f => (
                 <li key={f} className="flex items-center gap-2 text-sm text-gray-600">
                   <Check className="w-4 h-4 text-primary-600 shrink-0" />
                   {f}

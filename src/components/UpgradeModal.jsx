@@ -5,7 +5,8 @@ const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/test_aFa7sLgFi9bR3IW0pz2B200
 const proFeatures = [
   'No watermark on invoices',
   '6 premium templates (Executive, Bold, Studio)',
-  'Save your info & client details',
+  'Save invoices & client details',
+  'Invoice history — never lose a record',
   'Custom logo on invoices',
   'Early access to new features',
 ];
