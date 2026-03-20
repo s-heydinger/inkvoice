@@ -1,4 +1,9 @@
-import { FileText, Download, Zap, Shield, Palette, Clock } from 'lucide-react';
+import { FileText, Download, Zap, Shield, Palette, Clock, Check, Sparkles } from 'lucide-react';
+
+// ============================================================
+// IMPORTANT: Replace this URL with your actual Stripe Payment Link!
+// ============================================================
+const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/YOUR_LINK_HERE';
 
 const features = [
   {
@@ -138,6 +143,67 @@ export default function LandingPage({ onGetStarted }) {
                 <p className="text-sm text-gray-500 leading-relaxed">{f.desc}</p>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-20">
+        <h2 className="text-3xl font-bold text-gray-900 text-center mb-4">
+          Simple, honest pricing
+        </h2>
+        <p className="text-gray-500 text-center max-w-xl mx-auto mb-12">
+          Start for free. Upgrade when you're ready to look even more professional.
+        </p>
+        <div className="grid md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+          {/* Free */}
+          <div className="bg-white rounded-2xl border border-gray-200 p-8">
+            <h3 className="font-semibold text-gray-900 text-lg">Free</h3>
+            <div className="mt-4 mb-6">
+              <span className="text-4xl font-bold text-gray-900">$0</span>
+              <span className="text-gray-400 ml-1">/forever</span>
+            </div>
+            <ul className="space-y-3 mb-8">
+              {['Unlimited invoices', 'PDF download', '3 templates', 'Tax & discount calculations', 'Save invoices locally', 'Multi-currency'].map(f => (
+                <li key={f} className="flex items-center gap-2 text-sm text-gray-600">
+                  <Check className="w-4 h-4 text-green-500 shrink-0" />
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <button
+              onClick={onGetStarted}
+              className="w-full py-3 rounded-xl font-semibold text-gray-700 bg-gray-100 hover:bg-gray-200 transition-colors cursor-pointer"
+            >
+              Get Started Free
+            </button>
+          </div>
+          {/* Pro */}
+          <div className="bg-white rounded-2xl border-2 border-primary-600 p-8 relative">
+            <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-primary-600 text-white text-xs font-semibold px-3 py-1 rounded-full flex items-center gap-1">
+              <Sparkles className="w-3 h-3" /> Most Popular
+            </div>
+            <h3 className="font-semibold text-gray-900 text-lg">Pro</h3>
+            <div className="mt-4 mb-6">
+              <span className="text-4xl font-bold text-gray-900">$8</span>
+              <span className="text-gray-400 ml-1">/month</span>
+            </div>
+            <ul className="space-y-3 mb-8">
+              {['Everything in Free', 'No watermark on invoices', 'Premium templates', 'Custom logo on invoices', 'Priority support', 'Early access to new features'].map(f => (
+                <li key={f} className="flex items-center gap-2 text-sm text-gray-600">
+                  <Check className="w-4 h-4 text-primary-600 shrink-0" />
+                  {f}
+                </li>
+              ))}
+            </ul>
+            <a
+              href={STRIPE_PAYMENT_LINK}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block w-full py-3 rounded-xl font-semibold text-white bg-primary-600 hover:bg-primary-700 transition-colors text-center"
+            >
+              Upgrade to Pro
+            </a>
           </div>
         </div>
       </section>

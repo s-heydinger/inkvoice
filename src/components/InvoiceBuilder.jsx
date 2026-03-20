@@ -3,6 +3,7 @@ import { ArrowLeft, Download, Save, Plus, ChevronDown, ChevronRight } from 'luci
 import InvoiceForm from './InvoiceForm';
 import InvoicePreview from './InvoicePreview';
 import SavedInvoices from './SavedInvoices';
+import ProBanner from './ProBanner';
 import { createBlankInvoice, saveInvoice } from '../utils/storage';
 import { generatePDF } from '../utils/pdf';
 
@@ -42,6 +43,7 @@ export default function InvoiceBuilder({ onBack }) {
 
   return (
     <div className="min-h-screen bg-gray-50">
+      <ProBanner />
       {/* Top bar */}
       <div className="bg-white border-b border-gray-200 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between">
