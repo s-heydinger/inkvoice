@@ -11,7 +11,7 @@ import { useState } from 'react';
 // 4. Name it "Inkvoice Pro"
 // 5. Copy the link and paste it below
 // ============================================================
-const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/YOUR_LINK_HERE';
+const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/test_aFa7sLgFi9bR3IW0pz2B200';
 
 export default function ProBanner() {
   const [dismissed, setDismissed] = useState(false);

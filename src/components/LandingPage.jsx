@@ -3,7 +3,7 @@ import { FileText, Download, Zap, Shield, Palette, Clock, Check, Sparkles } from
 // ============================================================
 // IMPORTANT: Replace this URL with your actual Stripe Payment Link!
 // ============================================================
-const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/YOUR_LINK_HERE';
+const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/test_aFa7sLgFi9bR3IW0pz2B200';
 
 const features = [
   {
