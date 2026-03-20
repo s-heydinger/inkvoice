@@ -2,7 +2,7 @@ import { X, ArrowRight, CheckCircle, LogOut } from 'lucide-react';
 import { useState } from 'react';
 import { usePro } from '../utils/pro';
 
-const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/test_aFa7sLgFi9bR3IW0pz2B200';
+const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/4gMcN53SD4yhczL7ntb7y00';
 
 export default function LoginModal({ onClose }) {
   const { isPro, user, signUp, signIn, signOut } = usePro();

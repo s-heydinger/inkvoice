@@ -1,7 +1,7 @@
 import { Sparkles, X } from 'lucide-react';
 import { useState } from 'react';
 
-const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/test_aFa7sLgFi9bR3IW0pz2B200';
+const STRIPE_PAYMENT_LINK = 'https://buy.stripe.com/4gMcN53SD4yhczL7ntb7y00';
 
 export default function ProBanner() {
   const [dismissed, setDismissed] = useState(false);
