@@ -1,5 +1,5 @@
-import { useState, useCallback } from 'react';
-import { ArrowLeft, Download, Save, Plus, Lock, LogIn, ChevronDown, ChevronRight } from 'lucide-react';
+import { useState, useCallback, useEffect } from 'react';
+import { ArrowLeft, Download, Save, Plus, Lock, LogIn, ChevronDown, ChevronRight, X } from 'lucide-react';
 import InvoiceForm from './InvoiceForm';
 import InvoicePreview, { TEMPLATES } from './InvoicePreview';
 import SavedInvoices from './SavedInvoices';
@@ -20,6 +20,8 @@ export default function InvoiceBuilder({ onBack }) {
   const [showSaved, setShowSaved] = useState(false);
   const [refreshKey, setRefreshKey] = useState(0);
   const [saveMessage, setSaveMessage] = useState('');
+  const [showShareToast, setShowShareToast] = useState(false);
+  const [linkCopied, setLinkCopied] = useState(false);
 
   const currentTemplateIsPro = TEMPLATES[invoice.template]?.pro && !isPro;
 
@@ -27,11 +29,25 @@ export default function InvoiceBuilder({ onBack }) {
     setDownloading(true);
     try {
       await generatePDF('invoice-preview', `${invoice.invoiceNumber}.pdf`);
+      setShowShareToast(true);
+      setLinkCopied(false);
     } catch (err) {
       console.error('PDF generation failed:', err);
     }
     setDownloading(false);
   }, [invoice.invoiceNumber]);
+
+  useEffect(() => {
+    if (!showShareToast) return;
+    const timer = setTimeout(() => setShowShareToast(false), 8000);
+    return () => clearTimeout(timer);
+  }, [showShareToast]);
+
+  const handleCopyLink = useCallback(() => {
+    navigator.clipboard.writeText('https://www.inkvoice.us').then(() => {
+      setLinkCopied(true);
+    });
+  }, []);
 
   const handleSave = useCallback(() => {
     setSaving(true);
@@ -190,6 +206,26 @@ export default function InvoiceBuilder({ onBack }) {
           </div>
         </div>
       </div>
+      {/* Share toast */}
+      {showShareToast && (
+        <div className="fixed bottom-0 left-0 right-0 z-50 flex justify-center p-4 pointer-events-none">
+          <div className="bg-gray-900 text-white rounded-lg shadow-lg px-5 py-3 flex items-center gap-4 text-sm pointer-events-auto">
+            <span>Know someone who needs invoices? Share Inkvoice</span>
+            <button
+              onClick={handleCopyLink}
+              className="bg-white text-gray-900 px-3 py-1 rounded-md font-medium hover:bg-gray-100 transition-colors cursor-pointer whitespace-nowrap"
+            >
+              {linkCopied ? 'Copied!' : 'Copy Link'}
+            </button>
+            <button
+              onClick={() => setShowShareToast(false)}
+              className="text-gray-400 hover:text-white transition-colors cursor-pointer"
+            >
+              <X className="w-4 h-4" />
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
